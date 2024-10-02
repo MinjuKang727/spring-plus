@@ -1,0 +1,32 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/spring_plus
+    username: root
+    password: qazWSX123$%^
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+jwt:
+  secret:
+    key: 64K07J2867Cw7JuA7Lqg7ZSESkFWQTbquLDqsJXrr7zso7zsnoXri4jri6Quc3ByaW5nX3BsdXPso7zssKjqsJzsnbjqs7zsoJzsp4TtlonspJEuLi4=
+
+#logging:
+#  level:
+#    org.springframework.transaction.interceptor: trace
+#    org.hibernate.resource.transaction: debug
+
+server:
+  error:
+    include-message: always
+
+
+logging.level.org.hibernate.type.descriptor.sql: trace
+
