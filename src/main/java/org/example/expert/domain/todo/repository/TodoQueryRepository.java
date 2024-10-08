@@ -1,7 +1,7 @@
 package org.example.expert.domain.todo.repository;
 
-import org.example.expert.domain.todo.entity.Todo;
+import org.example.expert.domain.todo.dto.response.TodoResponse;
 
 public interface TodoQueryRepository {
-    Todo findByIdWithUser(Long todoId);
+    TodoResponse findByIdWithUser(Long todoId);
 }

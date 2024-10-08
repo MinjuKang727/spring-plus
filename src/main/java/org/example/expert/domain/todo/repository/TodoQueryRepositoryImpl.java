@@ -1,10 +1,13 @@
 package org.example.expert.domain.todo.repository;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.example.expert.domain.todo.dto.response.TodoResponse;
 import org.example.expert.domain.todo.entity.Todo;
+import org.example.expert.domain.user.dto.response.UserResponse;
 import org.springframework.stereotype.Repository;
 
 import static org.example.expert.domain.todo.entity.QTodo.todo;
@@ -18,14 +21,26 @@ public class TodoQueryRepositoryImpl implements TodoQueryRepository {
 
 
     @Override
-    public Todo findByIdWithUser(Long todoId) {
+    public TodoResponse findByIdWithUser(Long todoId) {
         return jpaQueryFactory
-                .select(todo)
+                .select(Projections.constructor(
+                        TodoResponse.class,
+                        todo.id,
+                        todo.title,
+                        todo.contents,
+                        todo.weather,
+                        Projections.constructor(
+                                UserResponse.class,
+                                todo.user.id,
+                                user.email,
+                                user.nickname
+                        ),
+                        todo.createdAt,
+                        todo.modifiedAt
+                ))
                 .from(todo)
-                .join(todo.user, user).fetchJoin()
-                .where(
-                        todoIdEq(todoId)
-                )
+                .join(todo.user, user)
+                .where(todoIdEq(todoId))
                 .fetchFirst();
     }
 
