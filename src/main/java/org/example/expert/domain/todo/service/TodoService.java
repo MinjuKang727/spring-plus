@@ -1,5 +1,6 @@
 package org.example.expert.domain.todo.service;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.expert.client.WeatherClient;
 import org.example.expert.domain.common.dto.AuthUser;
@@ -72,8 +73,11 @@ public class TodoService {
     }
 
     public TodoResponse getTodo(long todoId) {
-        Todo todo = todoRepository.findByIdWithUser(todoId)
-                .orElseThrow(() -> new InvalidRequestException("Todo not found"));
+        Todo todo = todoRepository.findByIdWithUser(todoId);
+
+        if (todo == null) {
+            throw new EntityNotFoundException("Todo Does Not Exist such that todoId = " + todoId);
+        }
 
         User user = todo.getUser();
 
