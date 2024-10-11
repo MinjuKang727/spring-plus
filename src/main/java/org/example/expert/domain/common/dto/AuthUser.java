@@ -2,6 +2,10 @@ package org.example.expert.domain.common.dto;
 
 import lombok.Getter;
 import org.example.expert.domain.user.enums.UserRole;
+import org.example.expert.security.UserDetailsImpl;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
 
 @Getter
 public class AuthUser {
@@ -18,4 +22,7 @@ public class AuthUser {
         this.userRole = userRole;
     }
 
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return new UserDetailsImpl(this).getAuthorities();
+    }
 }
